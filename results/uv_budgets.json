@@ -1,0 +1,28 @@
+{
+  "name": "uv_budgets",
+  "description": "Scale 2 with budgets (2,1) refuses the whole brief.  Narrowing u to [1,2] makes it publishable on the same budget.  Raising u's budget to 3 accepts the original brief and leaves (1/2, 1/2).",
+  "refused": true,
+  "refusal": {
+    "shortfalls": {
+      "u": {
+        "charge": "5/2",
+        "remaining": "2",
+        "shortfall": "1/2"
+      }
+    }
+  },
+  "remaining_after_refusal": {
+    "u": "2",
+    "v": "1"
+  },
+  "narrowed_published": "uv-2",
+  "narrowed_remaining": {
+    "u": "1/2",
+    "v": "1/2"
+  },
+  "accepted_published": "uv-3",
+  "accepted_remaining": {
+    "u": "1/2",
+    "v": "1/2"
+  }
+}

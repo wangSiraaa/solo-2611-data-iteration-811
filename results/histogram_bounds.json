@@ -1,0 +1,110 @@
+{
+  "name": "histogram_bounds",
+  "description": "Three columns with a staircase, an empty interval, negative weights and an explicitly absent subject.  Mutually exclusive unit columns make b's bound 2, not the 3 a per-column sum would give.",
+  "true_column_sums": [
+    "1",
+    "1",
+    "-1"
+  ],
+  "subject_states": {
+    "a": {
+      "name": "a",
+      "present": true,
+      "sample_id": "S-a",
+      "mean": "1/2",
+      "contributions": [
+        "1",
+        "0",
+        "-1"
+      ],
+      "replacement_bound": "4",
+      "bound_witnesses": [
+        {
+          "kind": "absent",
+          "mean": null,
+          "contribution": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "mean",
+          "mean": "1",
+          "contribution": [
+            "2",
+            "0",
+            "-2"
+          ]
+        }
+      ],
+      "distinct_legal_vectors": 3
+    },
+    "b": {
+      "name": "b",
+      "present": true,
+      "sample_id": "S-b",
+      "mean": "3/2",
+      "contributions": [
+        "0",
+        "1",
+        "0"
+      ],
+      "replacement_bound": "2",
+      "bound_witnesses": [
+        {
+          "kind": "mean",
+          "mean": "0",
+          "contribution": [
+            "1",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "mean",
+          "mean": "1",
+          "contribution": [
+            "0",
+            "1",
+            "0"
+          ]
+        }
+      ],
+      "distinct_legal_vectors": 4
+    },
+    "c-absent": {
+      "name": "c-absent",
+      "present": false,
+      "sample_id": null,
+      "mean": null,
+      "contributions": [
+        "0",
+        "0",
+        "0"
+      ],
+      "replacement_bound": "7",
+      "bound_witnesses": [
+        {
+          "kind": "absent",
+          "mean": null,
+          "contribution": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "kind": "mean",
+          "mean": "0",
+          "contribution": [
+            "4",
+            "-3",
+            "0"
+          ]
+        }
+      ],
+      "distinct_legal_vectors": 3
+    }
+  }
+}

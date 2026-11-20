@@ -9,6 +9,11 @@ from __future__ import annotations
 import json
 import sys
 
+from .histogram_scenarios import (
+    build_histogram_example,
+    build_uv_bounds_example,
+    build_uv_budget_example,
+)
 from .scenarios import build_all_scenarios, scenario_to_dict
 from .warehouse import clear_caches
 
@@ -31,6 +36,21 @@ def demo(outdir: str = "results") -> int:
     _dump(os.path.join(outdir, "summary.json"), summary)
     for name, payload in summary.items():
         print(f"{name}: {payload['headline']}")
+
+    # Histogram contribution / publisher replay cases.
+    histogram = {}
+    for example in (
+        build_uv_bounds_example(),
+        build_uv_budget_example(),
+        build_histogram_example(),
+    ):
+        payload = {"name": example.name, "description": example.description}
+        payload.update(example.payload)
+        histogram[example.name] = payload
+        _dump(os.path.join(outdir, f"{example.name}.json"), payload)
+    _dump(os.path.join(outdir, "histogram_summary.json"), histogram)
+    for name, payload in histogram.items():
+        print(f"{name}: {payload['description']}")
     return 0
 
 

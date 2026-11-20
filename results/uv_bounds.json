@@ -1,0 +1,69 @@
+{
+  "name": "uv_bounds",
+  "description": "u's bound is 5 (witnesses (2,0) and (0,3)); v's bound is 1.  Narrowing u's public interval to [1,2] leaves the mean 1 valid and lowers the bound to 3.",
+  "true_column_sums": [
+    "1",
+    "3"
+  ],
+  "u": {
+    "name": "u",
+    "present": true,
+    "sample_id": "S-u",
+    "mean": "1",
+    "contributions": [
+      "0",
+      "3"
+    ],
+    "replacement_bound": "5",
+    "bound_witnesses": [
+      {
+        "kind": "mean",
+        "mean": "0",
+        "contribution": [
+          "2",
+          "0"
+        ]
+      },
+      {
+        "kind": "mean",
+        "mean": "1",
+        "contribution": [
+          "0",
+          "3"
+        ]
+      }
+    ],
+    "distinct_legal_vectors": 3
+  },
+  "v": {
+    "name": "v",
+    "present": true,
+    "sample_id": "S-v",
+    "mean": "1/2",
+    "contributions": [
+      "1",
+      "0"
+    ],
+    "replacement_bound": "1",
+    "bound_witnesses": [
+      {
+        "kind": "absent",
+        "mean": null,
+        "contribution": [
+          "0",
+          "0"
+        ]
+      },
+      {
+        "kind": "mean",
+        "mean": "0",
+        "contribution": [
+          "1",
+          "0"
+        ]
+      }
+    ],
+    "distinct_legal_vectors": 2
+  },
+  "u_narrowed_interval_bound": "3"
+}

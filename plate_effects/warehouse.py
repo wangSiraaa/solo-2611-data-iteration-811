@@ -715,6 +715,52 @@ class ReadoutWarehouse:
     def sample_stats(self, run_or_id: ReadoutRun | str, sample_id: str) -> SampleSummary:
         return self.fit(run_or_id).sample(sample_id)
 
+    def complete_sample_mean(self, run_or_id: ReadoutRun | str, sample_id: str) -> Fraction:
+        """The exact corrected mean of a sample whose every replicate is usable.
+
+        This is the entry point used by histogram contributors: a subject binds
+        to at most one sample in a run, and every column of that subject is
+        driven by this single corrected mean.  A sample that is missing a
+        replicate or has an unidentifiable replicate raises instead of returning
+        a partial mean.
+        """
+
+        try:
+            summary = self.sample_stats(run_or_id, sample_id)
+        except KeyError as exc:
+            raise WarehouseError(f"sample {sample_id!r} is not part of the run") from exc
+        if summary.status != "COMPLETE" or summary.mean is None:
+            reasons = ", ".join(
+                f"{reason['well']}:{reason['status']}" for reason in summary.reasons
+            )
+            raise WarehouseError(
+                f"sample {sample_id!r} has no complete evidence ({summary.status}"
+                + (f"; {reasons}" if reasons else "")
+                + ")"
+            )
+        return summary.mean
+
+    def subject_means(
+        self,
+        run_or_id: ReadoutRun | str,
+        bindings: Mapping[str, str | None],
+    ) -> dict[str, Fraction | None]:
+        """Resolve subject -> corrected mean, one sample per subject.
+
+        ``bindings`` maps a subject name to the sample id it uses in this run,
+        or to ``None`` for an explicitly absent subject (mean ``None``).  The
+        single-value-per-subject shape enforces the "at most one sample per
+        subject per run" agreement by construction.
+        """
+
+        result: dict[str, Fraction | None] = {}
+        for subject, sample_id in bindings.items():
+            if sample_id is None:
+                result[subject] = None
+                continue
+            result[subject] = self.complete_sample_mean(run_or_id, sample_id)
+        return result
+
     def _fit_run(self, run: ReadoutRun) -> FitReport:
         layout = run.layout
         structure = _structure_for(layout)
